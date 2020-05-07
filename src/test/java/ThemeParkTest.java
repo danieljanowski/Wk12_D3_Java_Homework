@@ -1,7 +1,9 @@
 import attractions.Dodgems;
 import attractions.Playground;
+import attractions.RollerCoaster;
 import org.junit.Before;
 import org.junit.Test;
+import people.Visitor;
 import stalls.CandyflossStall;
 import stalls.IceCreamStall;
 import stalls.ParkingSpot;
@@ -16,6 +18,10 @@ public class ThemeParkTest {
     CandyflossStall candyflossStall;
     Playground playground;
     Dodgems dodgems;
+    RollerCoaster rollerCoaster;
+    Visitor visitor1;
+    Visitor visitor2;
+    Visitor visitor3;
 
     @Before
     public void before(){
@@ -24,6 +30,10 @@ public class ThemeParkTest {
         candyflossStall = new CandyflossStall("Candy","Annie",ParkingSpot.A2,4);
         playground = new Playground("Slides",10);
         dodgems = new Dodgems("Dodge-ems",6);
+        rollerCoaster = new RollerCoaster("Blue Ridge", 10);
+        visitor1 = new Visitor(10, 100, 13);
+        visitor2 = new Visitor(21, 210, 45);
+        visitor3 = new Visitor(13, 140, 30);
     }
 
     @Test
@@ -48,4 +58,22 @@ public class ThemeParkTest {
         assertEquals(2, themePark.countAtractions());
         assertEquals(4, themePark.getAllReviewed().size());
     }
+
+    @Test
+    public void visitorCanVisitAttraction(){
+        themePark.visit(visitor1, playground);
+        assertEquals(1, playground.getVisitCount());
+        assertEquals(1, visitor1.countVisitedAttractions());
+
+        themePark.visit(visitor2, rollerCoaster);
+        assertEquals(1, rollerCoaster.getVisitCount());
+        assertEquals(1, visitor2.countVisitedAttractions());
+
+        themePark.visit(visitor3, playground);
+        assertEquals(2, playground.getVisitCount());
+        assertEquals(1, visitor3.countVisitedAttractions());
+
+
+    }
+
 }
